@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+    --color-bg: #f5f2e4;
+    --color-text-primary: #010101;
+    --color-primary: #f95454;
+
+    --font-rubik: "Rubik", sans-serif;
+    --font-grotesk: "Hanken Grotesk", sans-serif;
+    --font-gsans: "Google Sans", sans-serif;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url(../assets/fonts/Rubik/Rubik.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Google Sans';
+    src: url(../assets/fonts/Google_Sans/GoogleSans.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Hanken Grotesk';
+    src: url(../assets/fonts/Hanken_Grotesk/HankenGrotesk.ttf) format('truetype');
+}
