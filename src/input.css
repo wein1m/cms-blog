@@ -3,7 +3,8 @@
 @theme {
     --color-bg: #f5f2e4;
     --color-text-primary: #010101;
-    --color-primary: #f95454;
+    --color-primary: #e04016;
+    --color-nav: #ebe6d5;
 
     --font-rubik: "Rubik", sans-serif;
     --font-grotesk: "Hanken Grotesk", sans-serif;
@@ -23,4 +24,8 @@
 @font-face {
     font-family: 'Hanken Grotesk';
     src: url(../assets/fonts/Hanken_Grotesk/HankenGrotesk.ttf) format('truetype');
+}
+
+* {
+    @apply font-grotesk;
 }
