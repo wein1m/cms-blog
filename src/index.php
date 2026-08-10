@@ -7,6 +7,11 @@ require_once "head.php";
         Helllo World~!
     </h1>
 </div>
+<div class="bg-bg w-full h-screen flex items-center justify-center">
+    <h1 class="font-grotesk font-medium text-9xl text-text-primary">
+        Another Helllo World~!
+    </h1>
+</div>
 
 <?php
 include_once "foot.php";
