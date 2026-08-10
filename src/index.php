@@ -3,9 +3,9 @@ require_once "head.php";
 ?>
 
 <section class="w-full">
-    <div class="py-24 text-center font-gsans">
-        <h1 class="text-6xl mb-4 font-bold"> From the pages of Shiori.</h1>
-        <h3 class="text-2xl font-semibold">Stories, thoughts & discoveries.</h3>
+    <div class="title">
+        <h1> From the pages of Shiori.</h1>
+        <h3>Stories, thoughts & discoveries.</h3>
     </div>
 
     <div class="px-32 grid grid-cols-[repeat(3,1fr)] gap-14">

@@ -28,7 +28,17 @@
 
 body {
     @apply bg-bg font-grotesk overflow-x-hidden;
+}
 
+.title {
+    @apply py-24 text-center font-gsans px-48;
+
+    h1 {
+        @apply text-6xl mb-4 font-bold leading-snug;
+    }
+    h3 {
+        @apply text-2xl font-semibold;
+    }
 }
 
 .page-number {
