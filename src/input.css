@@ -6,14 +6,9 @@
     --color-primary: #e04016;
     --color-nav: #ebe6d5;
 
-    --font-rubik: "Rubik", sans-serif;
     --font-grotesk: "Hanken Grotesk", sans-serif;
     --font-gsans: "Google Sans", sans-serif;
-}
-
-@font-face {
-    font-family: 'Rubik';
-    src: url(../assets/fonts/Rubik/Rubik.ttf) format('truetype');
+    --font-bungee: "Bungee", sans-serif;
 }
 
 @font-face {
@@ -26,8 +21,14 @@
     src: url(../assets/fonts/Hanken_Grotesk/HankenGrotesk.ttf) format('truetype');
 }
 
+@font-face {
+    font-family: 'Bungee';
+    src: url(../assets/fonts/Bungee/Bungee-Regular.ttf) format('truetype');
+}
+
 body {
-    @apply bg-bg font-grotesk;
+    @apply bg-bg font-grotesk overflow-x-hidden;
+
 }
 
 .page-number {
