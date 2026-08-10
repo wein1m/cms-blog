@@ -26,6 +26,15 @@
     src: url(../assets/fonts/Hanken_Grotesk/HankenGrotesk.ttf) format('truetype');
 }
 
-* {
-    @apply font-grotesk;
+body {
+    @apply bg-bg font-grotesk;
+}
+
+.page-number {
+    @apply text-text-primary text-3xl font-grotesk font-medium ;
+
+    a {
+        @apply p-4;
+        @apply hover:text-primary hover:cursor-pointer hover:font-semibold;
+    }
 }

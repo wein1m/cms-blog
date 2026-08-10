@@ -7,7 +7,7 @@
   </head>
   <body>
 
-  <nav class="fixed w-full flex items-center justify-between px-24 py-4 border-b bg-bg border-black/10">
+  <nav class="sticky top-0 w-full flex items-center justify-between px-24 py-4 border-b bg-bg border-black/10">
     <div class="flex items-center">
       <img src="../assets/logo/shiori-nobg.png" class="h-16 mr-10" />
       <ul>
