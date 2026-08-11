@@ -58,3 +58,7 @@ body {
 .ql-editor p {
     @apply text-[1rem];
 }
+
+.ql-toolbar.ql-snow {
+    margin-top: 0.5rem !important;
+}

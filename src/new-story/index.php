@@ -1,5 +1,5 @@
 <?php
-include_once "head.php";
+include_once "../head.php";
 
 // Categories & Tags example
 $categories = [
@@ -34,26 +34,26 @@ $prefill = [
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
 <section class="px-86 py-32">
-    <form action="" method="POST">
-        <input type="text" name="judul" placeholder="Untitled Article"
-            class="w-full text-5xl font-bold placeholder:text-black/30 overflow-x-visible!"
-            value="<?= $prefill['title'] ?>">
+    <form action="create.php" method="POST" id="new-story">
+        <input type="text" name="title" placeholder="Untitled Article"
+            class="w-full text-5xl font-bold placeholder:text-black/30 overflow-x-visible!">
         <div class="mt-12 mb-20">
-            <label class="text-lg font-semibold">Thumbnail</label>
+            <h5 class="text-lg font-semibold">Thumbnail</h5>
             <div class="-mt-4">
-                <input type="text" name="img_url" placeholder="Paste image URL..." value="<?= $prefill['img_cover'] ?>"
+                <input type="text" id="img_url" name="img_url" placeholder="Paste image URL..."
                     class="w-full mt-3 bg-transparent border-b border-black/20 py-2">
-                <img src="<?= ($prefill['img_cover'] !== NULL ? $prefill['img_cover'] : "") ?>" class="mt-3 shadow-lg">
+                <div id="img-container"> </div>
             </div>
         </div>
 
         <!-- Quill Container -->
+        <h5 class="text-lg font-semibold">Contents</h5>
         <div id="editor">
-            <div id="editor-container" class="text-9xl"><?= $prefill['content'] ?></div>
+            <div id="editor-container" class="text-9xl"></div>
         </div>
 
         <div class="mt-10">
-            <h5 class="mb-2">Select Category:</h5>
+            <h5 class="mb-2 text-lg font-semibold">Select Category:</h5>
             <div class="flex flex-wrap gap-2">
                 <?php foreach ($categories as $cat): ?>
                 <button type="button" data-cat-id="<?= $cat['id'] ?>"
@@ -65,7 +65,7 @@ $prefill = [
         </div>
 
         <div class="mt-8">
-            <h5 class="mb-2">Select Category:</h5>
+            <h5 class="mb-2 text-lg font-semibold">Select Category:</h5>
             <div class="flex flex-wrap gap-2">
                 <?php foreach ($tags as $tag): ?>
                 <button type="button" data-tag-id="<?= $tag['id'] ?>"
@@ -82,6 +82,11 @@ $prefill = [
             </button>
         </div>
 
+        <!-- <input type="hidden" name="title" id="title-input">
+        <input type="hidden" name="img_cover" id="img-input"> -->
+        <input type="hidden" name="content" id="content-input">
+        <input type="hidden" name="category" id="category-input">
+        <input type="hidden" name="tags" id="tags-input">
     </form>
 </section>
 
@@ -91,6 +96,42 @@ $prefill = [
 const quill = new Quill('#editor', {
     placeholder: "Enter your stories here",
     theme: 'snow'
+});
+
+const imgInput = document.querySelector("#img_url");
+const imgContainer = document.querySelector("#img-container");
+
+let timeout;
+
+imgInput.addEventListener("input", () => {
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+        const url = imgInput.value.trim();
+
+        if (!url) {
+            imgContainer.innerHTML = "";
+            return;
+        }
+
+        const img = new Image();
+
+        img.onload = () => {
+            img.className = "mt-3 shadow-lg";
+            imgContainer.innerHTML = "";
+            imgContainer.appendChild(img);
+        };
+
+        img.onerror = () => {
+            imgContainer.innerHTML = `
+                <p class="mt-3 text-primary font-semibold">
+                    Unable to load image.
+                </p>
+            `;
+        };
+
+        img.src = url;
+    }, 500);
 });
 
 const categories = document.querySelectorAll(".category");
@@ -127,7 +168,13 @@ tags.forEach(tag => {
         }
     });
 });
+
+document.querySelector("form#new-story").addEventListener("submit", () => {
+    document.querySelector("#content-input").value = quill.root.innerHTML;
+    document.querySelector("#category-input").value = selectedCategory;
+    document.querySelector("#tags-input").value = selectedTags.join(",");
+})
 </script>
 <?php
-include_once "foot.php";
+include_once "../foot.php";
 ?>
