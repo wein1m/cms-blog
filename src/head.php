@@ -1,25 +1,35 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="output.css" />
-  </head>
-  <body>
+</head>
 
-  <nav class="sticky top-0 w-full flex items-center justify-between px-24 py-4 border-b bg-bg border-black/10">
-    <div class="flex items-center">
-      <img src="../assets/logo/shiori-nobg.png" class="h-16 mr-10" />
-      <ul>
-        <li class="flex gap-8 text-lg tracking-wider font-medium">
-          <a href="#">Home</a>
-          <a href="#">Blogs</a>
-          <a href="#">About Us</a>
-          <a href="#">Contact</a>
-        </li>
-    </div>
-      <div class="bg-primary text-white text-lg tracking-wider font-bold px-7 py-3">
+<body>
+
+    <nav class="sticky top-0 z-[999] w-full flex items-center justify-between px-24 py-4 border-b bg-bg border-black/10">
+        <div class="flex items-center">
+            <img src="../assets/logo/shiori-nobg.png" class="h-16 mr-10" />
+            <ul>
+                <li class="flex gap-8 text-lg tracking-wider font-medium">
+                    <a href="#">Home</a>
+                    <a href="#">Blogs</a>
+                    <a href="#">About Us</a>
+                    <a href="#">Contact</a>
+                </li>
+        </div>
+        <!-- <div class="bg-primary text-white text-lg tracking-wider font-bold px-7 py-3">
         <a>Login / Register</a>
-      </div>
-    </ul>
-  </nav>
+      </div> -->
+        <div class="">
+            <a href="./new-story.php" class="flex items-center gap-2 bg-primary text-white text-lg tracking-wider font-bold px-6 py-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                    <path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 5v14m-7-7h14" />
+                </svg>
+                Create</a>
+        </div>
+        </ul>
+    </nav>
