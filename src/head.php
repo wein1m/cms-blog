@@ -1,3 +1,6 @@
+<?php
+include_once "koneksi.php";
+?>
 <!doctype html>
 <html lang="en">
 
@@ -8,7 +11,6 @@
 </head>
 
 <body>
-
     <nav class="sticky top-0 z-[999] w-full flex items-center justify-between px-24 py-4 border-b bg-bg border-black/10">
         <div class="flex items-center">
             <a href="/cms-blog/src/index.php">

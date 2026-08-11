@@ -1,5 +1,27 @@
 <?php
 require_once "head.php";
+
+
+function GetDateCategory($raw_date, $article_id) {
+    global $conn;
+
+    $date = date('M d, Y', strtotime($raw_date));
+
+    $category_query = "
+        SELECT kategori.name
+        FROM artikel
+        JOIN kategori
+            ON artikel.id_kategori = kategori.id
+        WHERE artikel.id = ?;
+    ";
+
+    $stmt = $conn->prepare($category_query);
+    $stmt->execute([$article_id]);
+
+    $category = $stmt->fetch(PDO::FETCH_COLUMN);
+
+    echo $date . ' | ' . $category;
+}
 ?>
 
 <section class="w-full">
@@ -8,42 +30,23 @@ require_once "head.php";
         <h3>Stories, thoughts & discoveries.</h3>
     </div>
 
-    <div class="px-32 grid grid-cols-[repeat(3,1fr)] gap-14">
+    <div class="px-32 grid grid-cols-3 gap-14">
+        <?php
+        $query = "SELECT * FROM artikel";
+        $result = $conn->query($query);
+        $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($rows as $row):
+        ?>
         <div class="flex flex-col tracking-wide">
-            <img src="https://a.storyblok.com/f/178900/1280x720/f9202b80c5/villains-are-destined-to-die-header.jpg/m/576x0/filters:quality(95)format(webp)"
+            <img src="<?= $row['img_cover'] ?>"
                 class="shadow-lg mb-4" />
-            <h5 class="text-2xl font-semibold leading-tight mb-2">Villains Are Destined to Die Manhwa Gets Animated
-                Adaptation</h5>
-            <p>Japanese digital comic platform Piccoma today announced that an animated TV adaptation of SUOL's ...</p>
-            <p class="mt-4 text-gray-800 font-semibold">Aug 9, 2026 | Arisa Nojima</p>
+            <h5 class="text-2xl font-semibold leading-tight mb-2 line-clamp-2"><?= $row['title'] ?></h5>
+            <p class="line-clamp-2"><?= strip_tags($row['content']); ?></p>
+            <p class="mt-4 text-gray-800 font-semibold">
+                <?php GetDateCategory($row['created_at'], $row['id']); ?>
+            </p>
         </div>
-        <div class="flex flex-col tracking-wide">
-            <img src="https://a.storyblok.com/f/178900/960x540/8287f725d1/digimon-beatbreak-episode42-1.jpg/m/576x0/filters:quality(95)format(webp)"
-                class="shadow-lg mb-4" />
-            <h5 class="text-2xl font-semibold leading-tight mb-2">DIGIMON BEATBREAK Anime Releases Asuka Arc Key Visual
-            </h5>
-            <p>The DIGIMON BEATBREAKOpens in a new tab TV anime will enter its final chapter, the Asuka Arc, starting
-                ...</p>
-            <p class="mt-4 text-gray-800 font-semibold">Sep 27, 2026 | Shiho Nagashima</p>
-        </div>
-        <div class="flex flex-col tracking-wide">
-            <img src="https://a.storyblok.com/f/178900/960x540/be3a7827eb/detective-precure-film-guest-voice-cast.jpg/m/576x0/filters:quality(95)format(webp)"
-                class="shadow-lg mb-4" />
-            <h5 class="text-2xl font-semibold leading-tight mb-2">Star Detective Precure! Anime Film Announces Three
-                Guest Cast Members</h5>
-            <p>The official websiteOpens in a new tab for Eiga Meitantei Precure! Fushigina Niwa to Futari no Himitsu
-                (Star ...</p>
-            <p class="mt-4 text-gray-800 font-semibold">Aug 9, 2026 | Arisa Nojima</p>
-        </div>
-        <div class="flex flex-col tracking-wide">
-            <img src="https://a.storyblok.com/f/178900/960x540/be3a7827eb/detective-precure-film-guest-voice-cast.jpg/m/576x0/filters:quality(95)format(webp)"
-                class="shadow-lg mb-4" />
-            <h5 class="text-2xl font-semibold leading-tight mb-2">Star Detective Precure! Anime Film Announces Three
-                Guest Cast Members</h5>
-            <p>The official websiteOpens in a new tab for Eiga Meitantei Precure! Fushigina Niwa to Futari no Himitsu
-                (Star ...</p>
-            <p class="mt-4 text-gray-800 font-semibold">Aug 9, 2026 | Arisa Nojima</p>
-        </div>
+        <?php endforeach; ?>
     </div>
 
     <div class="relative flex flex-row w-full justify-center mt-32 page-number pb-32">
