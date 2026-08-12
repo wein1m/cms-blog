@@ -65,6 +65,26 @@ function GetDateCategory($raw_date, $article_id) {
         <h1 class="text-6xl mb-4 font-semibold"><?= $article["title"] ?></h1>
         <span class="mt-4 opacity-80 font-semibold tracking-wider">
             <?= FormatDate($article["created_at"]) ?> | Wein Salema Arbalest</span>
+
+        <?php if ($isAdmin): ?>
+        <div class="flex gap-4 mt-6">
+            <a href="#" class="flex items-center gap-2 border border-text-primary text-text-primary font-semibold px-4 py-2 hover:bg-text-primary hover:text-bg transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9"/>
+                    <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+                </svg>
+                Edit Story
+            </a>
+            <button type="button" class="flex items-center gap-2 border border-primary text-primary font-semibold px-4 py-2 hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 6h18"/>
+                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
+                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
+                </svg>
+                Delete Story
+            </button>
+        </div>
+        <?php endif; ?>
     </div>
 
     <div class="flex flex-col justify-center mt-16 mx-86">

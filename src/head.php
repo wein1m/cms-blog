@@ -1,6 +1,8 @@
 <?php
 include_once "koneksi.php";
+$isAdmin = true; // yes. no auth. don't ask :3
 ?>
+
 <!doctype html>
 <html lang="en">
 
