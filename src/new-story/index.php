@@ -1,34 +1,13 @@
 <?php
 include_once "../head.php";
 
-// Categories & Tags example
-$categories = [
-    ["id" => 1, "name" => "News"],
-    ["id" => 2, "name" => "Interviews"],
-    ["id" => 3, "name" => "Reviews"],
-    ["id" => 4, "name" => "Stories"],
-];
+$tags_query = "SELECT * FROM tag";
+$stmt = $conn->query($tags_query);
+$tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$tags = [
-    ["id" => 1, "name" => "Anime"],
-    ["id" => 2, "name" => "Manga"],
-    ["id" => 3, "name" => "Manhwa"],
-    ["id" => 4, "name" => "Manhua"],
-    ["id" => 5, "name" => "Movie"],
-    ["id" => 6, "name" => "TV Series"],
-    ["id" => 7, "name" => "Romance"],
-    ["id" => 8, "name" => "Action"],
-    ["id" => 9, "name" => "Slice of Life"],
-];
-
-// Contents example
-$prefill = [
-    "title" => "Star Detective Precure! Anime Film Announces Three Guest Cast Members",
-    "img_cover" => "https://a.storyblok.com/f/178900/960x540/be3a7827eb/detective-precure-film-guest-voice-cast.jpg/m/576x0/filters:quality(95)format(webp)",
-    "content" => "
-    <p>Japanese digital comic platform Piccoma today announced that an animated TV adaptation of SUOL's Villains Are Destined to Die manhwa, which adapted Gwon Gyeoeul's original web novel, is in production. It is if the adaptation is a Japanese production, and further details are yet to be revealed.</p><p><br></p><p> Press publishes the <strong>Villains Are Destined to Die</strong> manhwa in English and describes the story:</p><p><br></p><p> Daughter of the Duke's Super Love Project as the easy mode heroine, Ivonne, makes charming the male a breeze. But once you switch to hard mode and step into the shoes of Penelope, the misunderstood it's nearly impossible to even stay alive! So imagine the shock of suddenly waking up in Penelope's you know right away that your life is on the line. With love interests who will kill you if their meters drop too low and the inability to speak without choosing from pre-selected dialogue, it becomes clear that Penelope's chances have been rigged from the start—and this villain might just be to die!</p>
-    "
-]
+$kategori_query = "SELECT * FROM kategori";
+$stmt = $conn->query($kategori_query);
+$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <link rel="stylesheet" href="../quill.css">
