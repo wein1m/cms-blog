@@ -37,7 +37,7 @@ function GetDateCategory($raw_date, $article_id) {
         $rows = $result->fetchAll(PDO::FETCH_ASSOC);
         foreach ($rows as $row):
         ?>
-        <div class="flex flex-col tracking-wide">
+        <a href="./story/<?= $row['slug'] ?>" class="flex flex-col tracking-wide">
             <img src="<?= $row['img_cover'] ?>"
                 class="shadow-lg mb-4" />
             <h5 class="text-2xl font-semibold leading-tight mb-2 line-clamp-2"><?= $row['title'] ?></h5>
@@ -45,7 +45,7 @@ function GetDateCategory($raw_date, $article_id) {
             <p class="mt-4 text-gray-800 font-semibold">
                 <?php GetDateCategory($row['created_at'], $row['id']); ?>
             </p>
-        </div>
+        </a>
         <?php endforeach; ?>
     </div>
 

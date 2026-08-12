@@ -32,6 +32,7 @@ $prefill = [
 ?>
 
 <link rel="stylesheet" href="../quill.css">
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
 <section class="px-86 py-32">
     <form action="create.php" method="POST" id="new-story">
