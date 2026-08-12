@@ -82,7 +82,8 @@ function GetDateCategory($raw_date, $article_id) {
         </div>
 
         <div>
-            <a href="/cms-blog/src/index.php" class="mx-16 my-4 flex items-center gap-2 text-text-primary hover:text-primary">
+            <a href="/cms-blog/src/index.php"
+                class="mx-16 my-4 flex items-center gap-2 text-text-primary hover:text-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 72 72">
                     <path fill="currentColor"
                         d="M22.788 51.534L5 35.036l17.788-16.498l3.789 4.076l-10.396 9.641H67v5.562H16.181l10.396 9.642z" />
@@ -97,9 +98,13 @@ function GetDateCategory($raw_date, $article_id) {
             <h5 class="text-5xl font-semibold mb-6">Related</h5>
             <div class="grid grid-cols-3 gap-14">
                 <?php
-                $query = "SELECT * FROM artikel";
-                $result = $conn->query($query);
-                $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+                $query = "SELECT * FROM artikel
+                          WHERE slug != ?
+                          ORDER BY created_at DESC
+                          LIMIT 3 ";
+                $stmt = $conn->prepare($query);
+                $stmt->execute([$slug]);
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($rows as $row):
                 ?>
                 <a href="/cms-blog/src/story/<?= $row['slug'] ?>" class="flex flex-col tracking-wide">

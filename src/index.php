@@ -32,7 +32,7 @@ function GetDateCategory($raw_date, $article_id) {
 
     <div class="px-32 grid grid-cols-3 gap-14">
         <?php
-        $query = "SELECT * FROM artikel";
+        $query = "SELECT * FROM artikel ORDER BY created_at DESC";
         $result = $conn->query($query);
         $rows = $result->fetchAll(PDO::FETCH_ASSOC);
         foreach ($rows as $row):
