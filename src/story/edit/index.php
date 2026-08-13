@@ -48,13 +48,15 @@ $tags_query = "
 $stmt = $conn->prepare($tags_query);
 $stmt->execute([$article["id"]]);
 $selected_tags = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+$old_slug = $slug;
 ?>
 
 <link rel="stylesheet" href="../../quill.css">
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
 <section class="px-86 py-32">
-    <form action="edit.php" method="POST" id="edit-story">
+    <form action="../edit.php" method="POST" id="edit-story">
         <input type="text" name="title" placeholder="Untitled Article" value="<?= $article['title'] ?>"
             class="w-full text-5xl font-bold placeholder:text-black/30 overflow-x-visible!">
         <div class="mt-12 mb-20">
@@ -118,6 +120,7 @@ $selected_tags = $stmt->fetchAll(PDO::FETCH_COLUMN);
         <input type="hidden" name="content" id="content-input">
         <input type="hidden" name="category" id="category-input">
         <input type="hidden" name="tags" id="tags-input">
+        <input type="hidden" name="old_slug" id="oldSlug-input" value="<?= $old_slug ?>">
     </form>
 </section>
 
@@ -174,8 +177,8 @@ imgInput.addEventListener("input", () => {
 const categories = document.querySelectorAll(".category");
 const tags = document.querySelectorAll(".tag");
 
-let selectedCategory = null;
-let selectedTags = [];
+let selectedCategory = <?= json_encode((string) $selected_category) ?>;
+let selectedTags = <?= json_encode(array_map('strval', $selected_tags)) ?>;
 
 categories.forEach(category => {
     category.addEventListener("click", () => {
