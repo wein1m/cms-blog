@@ -61,6 +61,31 @@ function GetDateCategory($raw_date, $article_id) {
 ?>
 
 <section>
+    <div id="confirmation-modal" class="hidden fixed inset-0 bg-black/50 z-999 items-center justify-center">
+        <div id="confirmation-box" class="bg-white rounded-lg p-8" onclick="event.stopPropagation()">
+            <h1 id="modal-title" class="text-3xl font-semibold">
+                Confirmation
+            </h1>
+
+            <div class="pr-10 max-w-[24rem] my-4">
+                <p id="modal-text-1" class="text-gray-800/80 text-sm leading-snug mb-2"></p>
+                <p id="modal-text-2" class="text-gray-800/80 text-sm leading-snug"></p>
+            </div>
+
+            <div class="flex flex-row gap-2 mt-4">
+                <button type="button" id="modal-cancel"
+                    class="rounded-sm w-1/2 flex justify-center bg-[#e6e6f4] text-text-primary font-semibold px-4 py-2 hover:bg-[#cfcfd7] transition-colors duration-200 cursor-pointer">
+                    Cancel
+                </button>
+
+                <a id="modal-confirm"
+                    class="rounded-sm w-1/2 flex justify-center bg-primary text-white font-semibold px-4 py-2 hover:bg-primary/90 transition-colors duration-200 cursor-pointer">
+                    Confirm
+                </a>
+            </div>
+        </div>
+    </div>
+
     <div class="flex flex-col justify-center items-center px-86 mt-24 text-center ">
         <h1 class="text-6xl mb-4 font-semibold"><?= $article["title"] ?></h1>
         <span class="mt-4 opacity-80 font-semibold tracking-wider">
@@ -68,21 +93,26 @@ function GetDateCategory($raw_date, $article_id) {
 
         <?php if ($isAdmin): ?>
         <div class="flex gap-4 mt-6">
-            <a href="/cms-blog/src/story/edit/<?= $slug ?>" class="flex items-center gap-2 border border-text-primary text-text-primary font-semibold px-4 py-2 hover:bg-text-primary hover:text-bg transition-colors duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 20h9"/>
-                    <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+            <!-- <a href="/cms-blog/src/story/edit/<?= $slug ?>" -->
+            <button type="button" id="edit-story"
+                class="flex items-center gap-2 border border-text-primary text-text-primary font-semibold px-4 py-2 hover:bg-text-primary hover:text-bg transition-colors duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 20h9" />
+                    <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
                 </svg>
                 Edit Story
-            </a>
-            <button type="button" class="flex items-center gap-2 border border-primary text-primary font-semibold px-4 py-2 hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 6h18"/>
-                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/>
-                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/>
-                </svg>
-                Delete Story
-            </button>
+                </a>
+                <button type="button" id="delete-story"
+                    class="flex items-center gap-2 border border-primary text-primary font-semibold px-4 py-2 hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 6h18" />
+                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                    </svg>
+                    Delete Story
+                </button>
         </div>
         <?php endif; ?>
     </div>
@@ -142,6 +172,64 @@ function GetDateCategory($raw_date, $article_id) {
         </div>
     </div>
 </section>
+
+<script>
+const modal = document.querySelector("#confirmation-modal");
+const modalTitle = document.querySelector("#modal-title");
+const modalText1 = document.querySelector("#modal-text-1");
+const modalText2 = document.querySelector("#modal-text-2");
+const modalConfirm = document.querySelector("#modal-confirm");
+const modalCancel = document.querySelector("#modal-cancel");
+
+const editButton = document.querySelector("#edit-story");
+const deleteButton = document.querySelector("#delete-story");
+
+function openModal(type) {
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+
+    if (type === "edit") {
+        modalTitle.textContent = "Edit Confirmation";
+        modalText1.textContent = "Are you sure you want to edit this story?";
+        modalText2.textContent =
+            "Any changes you make will update the current version of the story.";
+
+        modalConfirm.href = "/cms-blog/src/story/edit/<?= $slug ?>";
+    }
+
+    if (type === "delete") {
+        modalTitle.textContent = "Delete Confirmation";
+        modalText1.textContent = "Are you sure you want to delete this story?";
+        modalText2.textContent =
+            "This action cannot be undone, and all of the story's content will be permanently removed.";
+
+        modalConfirm.href = "/cms-blog/src/story/delete.php?id=<?= $article['id'] ?>";
+    }
+}
+
+function closeModal() {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+}
+
+editButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    openModal("edit");
+});
+
+deleteButton.addEventListener("click", () => {
+    openModal("delete");
+});
+
+modalCancel.addEventListener("click", closeModal);
+
+// click the dark background to close
+modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+        closeModal();
+    }
+});
+</script>
 
 <?php
 include_once "../foot.php";
