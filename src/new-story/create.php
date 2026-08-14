@@ -1,5 +1,6 @@
 <?php
-include_once "../koneksi.php";
+require_once "../koneksi.php";
+require_once "../helpers/db.php";
 
 try {
     $conn->beginTransaction();
@@ -16,33 +17,20 @@ try {
 
     $tag_ids = explode(",", $tags);
 
-    $query = "INSERT INTO artikel
-            (title, slug, content, img_cover,  id_kategori)
-            VALUES
-            (?, ?, ?, ?, ?)
-    ";
-
-    $stmt = $conn->prepare($query);
-    $stmt->execute([
-        $title,
-        $slug,
-        $content,
-        $img_url,
-        $category
-    ]);
+    db_query("
+        INSERT INTO artikel
+        (title, slug, content, img_cover,  id_kategori)
+        VALUES
+        (?, ?, ?, ?, ?)
+    ", [$title, $slug, $content, $img_url, $category]);
 
     $artikel_id = $conn->lastInsertId();
 
     foreach ($tag_ids as $tag_id) {
-        $stmt = $conn->prepare("
+        db_query("
             INSERT INTO artikel_tag (artikel_id, tag_id)
             VALUES (?, ?)
-        ");
-
-        $stmt->execute([
-            $artikel_id,
-            $tag_id
-        ]);
+        ", [$artikel_id, $tag_id]);
     }
 
     $conn->commit();

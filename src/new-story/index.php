@@ -1,13 +1,9 @@
 <?php
-include_once "../head.php";
+require_once "../head.php";
+require_once "../helpers/db.php";
 
-$tags_query = "SELECT * FROM tag";
-$stmt = $conn->query($tags_query);
-$tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$kategori_query = "SELECT * FROM kategori";
-$stmt = $conn->query($kategori_query);
-$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$tags = db_fetch_all("SELECT * FROM tag");
+$categories = db_fetch_all("SELECT * FROM kategori");
 ?>
 
 <link rel="stylesheet" href="../quill.css">

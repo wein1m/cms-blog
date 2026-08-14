@@ -1,6 +1,8 @@
 <?php
 
-include_once "../head.php";
+require_once "../head.php";
+require_once "../helpers/db.php";
+include_once "../helpers/date.php";
 
 $slug = $_GET["slug"];
 
@@ -9,55 +11,22 @@ if ($slug == '') {
     echo("Story not found.");
 }
 
-$query = "SELECT * FROM artikel WHERE slug = ?";
-
-$stmt = $conn->prepare($query);
-$stmt->execute([$slug]);
-
-$article = $stmt->fetch(PDO::FETCH_ASSOC);
+$article = db_fetch_row("
+    SELECT * FROM artikel WHERE slug = ?
+", [$slug]);
 
 if (!$article) {
     http_response_code(404);
     echo("Story not found.");
 }
 
-$tags_query = "
+$tags = db_fetch_col_arr("
     SELECT tag.name
     FROM artikel_tag
     JOIN tag
         ON artikel_tag.tag_id = tag.id
     WHERE artikel_tag.artikel_id = ?
-";
-
-$stmt = $conn->prepare($tags_query);
-$stmt->execute([$article["id"]]);
-
-$tags = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-function FormatDate($raw_date) {
-    $date = date('M d, Y', strtotime($raw_date));
-    return $date;
-}
-function GetDateCategory($raw_date, $article_id) {
-    global $conn;
-
-    $date = date('M d, Y', strtotime($raw_date));
-
-    $category_query = "
-        SELECT kategori.name
-        FROM artikel
-        JOIN kategori
-            ON artikel.id_kategori = kategori.id
-        WHERE artikel.id = ?;
-    ";
-
-    $stmt = $conn->prepare($category_query);
-    $stmt->execute([$article_id]);
-
-    $category = $stmt->fetch(PDO::FETCH_COLUMN);
-
-    echo $date . ' | ' . $category;
-}
+", [$article["id"]]);
 ?>
 
 <section>
@@ -148,13 +117,12 @@ function GetDateCategory($raw_date, $article_id) {
             <h5 class="text-5xl font-semibold mb-6">Related</h5>
             <div class="grid grid-cols-3 gap-14">
                 <?php
-                $query = "SELECT * FROM artikel
-                          WHERE slug != ?
-                          ORDER BY created_at DESC
-                          LIMIT 3 ";
-                $stmt = $conn->prepare($query);
-                $stmt->execute([$slug]);
-                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $rows = db_fetch_all("
+                    SELECT * FROM artikel
+                    WHERE slug != ?
+                    ORDER BY created_at DESC
+                    LIMIT 3
+                ", [$slug]);
                 foreach ($rows as $row):
                 ?>
                 <a href="/cms-blog/src/story/<?= $row['slug'] ?>" class="flex flex-col tracking-wide">
@@ -162,7 +130,7 @@ function GetDateCategory($raw_date, $article_id) {
                     <h5 class="text-2xl font-semibold leading-tight mb-2 line-clamp-2"><?= $row['title'] ?></h5>
                     <p class="line-clamp-2"><?= strip_tags($row['content']); ?></p>
                     <p class="mt-4 text-gray-800 font-semibold">
-                        <?php GetDateCategory($row['created_at'], $row['id']); ?>
+                        <?php GetDateCategory($row['created_at'], $row['id'], $conn); ?>
                     </p>
                 </a>
                 <?php endforeach; ?>

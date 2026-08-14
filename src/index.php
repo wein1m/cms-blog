@@ -1,27 +1,8 @@
 <?php
 require_once "head.php";
+require_once "helpers/date.php";
+require_once "helpers/db.php";
 
-
-function GetDateCategory($raw_date, $article_id) {
-    global $conn;
-
-    $date = date('M d, Y', strtotime($raw_date));
-
-    $category_query = "
-        SELECT kategori.name
-        FROM artikel
-        JOIN kategori
-            ON artikel.id_kategori = kategori.id
-        WHERE artikel.id = ?;
-    ";
-
-    $stmt = $conn->prepare($category_query);
-    $stmt->execute([$article_id]);
-
-    $category = $stmt->fetch(PDO::FETCH_COLUMN);
-
-    echo $date . ' | ' . $category;
-}
 ?>
 
 <section class="w-full">
@@ -32,9 +13,7 @@ function GetDateCategory($raw_date, $article_id) {
 
     <div class="px-32 grid grid-cols-3 gap-14">
         <?php
-        $query = "SELECT * FROM artikel ORDER BY created_at DESC";
-        $result = $conn->query($query);
-        $rows = $result->fetchAll(PDO::FETCH_ASSOC);
+        $rows = db_fetch_all("SELECT * FROM artikel ORDER BY created_at DESC");
         foreach ($rows as $row):
         ?>
         <a href="./story/<?= $row['slug'] ?>" class="flex flex-col tracking-wide">
@@ -43,7 +22,7 @@ function GetDateCategory($raw_date, $article_id) {
             <h5 class="text-2xl font-semibold leading-tight mb-2 line-clamp-2"><?= $row['title'] ?></h5>
             <p class="line-clamp-2"><?= strip_tags($row['content']); ?></p>
             <p class="mt-4 text-gray-800 font-semibold">
-                <?php GetDateCategory($row['created_at'], $row['id']); ?>
+                <?php GetDateCategory($row['created_at'], $row['id'], $conn); ?>
             </p>
         </a>
         <?php endforeach; ?>

@@ -1,5 +1,6 @@
 <?php
-include_once "../koneksi.php";
+require_once "../koneksi.php";
+require_once "../helpers/db.php";
 
 try {
     $conn->beginTransaction();
@@ -12,15 +13,13 @@ try {
     $category = $_POST["category"];
     $tags = $_POST["tags"];
 
-    $stmt = $conn->prepare("
+    $artikel_id = db_fetch_col("
         SELECT id FROM artikel WHERE slug = ?
-    ");
-    $stmt->execute([$old_slug]);
-    $artikel_id = $stmt->fetchColumn();
+    ", [$old_slug]);
 
     if (!$artikel_id) {
         http_response_code(404);
-        echo "Story not found.";
+        die("Story not found.");
     }
 
     $slug = strtolower(trim($title));
@@ -28,13 +27,12 @@ try {
     $slug = trim($slug, '-');
 
     $query = "
-    UPDATE artikel
-    SET title = ?, slug = ?, content = ?, img_cover = ?, id_kategori = ?
-    WHERE slug = ?
+        UPDATE artikel
+        SET title = ?, slug = ?, content = ?, img_cover = ?, id_kategori = ?
+        WHERE slug = ?
     ";
 
-    $stmt = $conn->prepare($query);
-    $stmt->execute([
+    db_query($query, [
         $title,
         $slug,
         $content,
@@ -44,24 +42,18 @@ try {
     ]);
 
     // remove old tags (since it's PK which is unique)
-    $stmt = $conn->prepare("
-    DELETE FROM artikel_tag
-    WHERE artikel_id = ?
-    ");
-    $stmt->execute([$artikel_id]);
+    db_query("
+        DELETE FROM artikel_tag
+        WHERE artikel_id = ?
+    ", [$artikel_id]);
 
     $tag_ids = explode(",", $tags);
 
     foreach ($tag_ids as $tag_id) {
-        $stmt = $conn->prepare("
+        db_query("
             INSERT INTO artikel_tag (artikel_id, tag_id)
             VALUES (?, ?)
-        ");
-
-        $stmt->execute([
-            $artikel_id,
-            $tag_id
-        ]);
+        ", [$artikel_id, $tag_id]);
     }
 
     $conn->commit();

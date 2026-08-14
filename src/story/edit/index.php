@@ -1,53 +1,37 @@
 <?php
-include_once "../../head.php";
+require_once "../../head.php";
+require_once "../../helpers/db.php";
 
 $slug = $_GET["slug"];
 
 if ($slug == '') {
     http_response_code(404);
-    echo "Story not found.";
+    die("Story not found.");
 }
 
-$query = "SELECT * FROM artikel WHERE slug = ?";
-$stmt = $conn->prepare($query);
-$stmt->execute([$slug]);
-$article = $stmt->fetch(PDO::FETCH_ASSOC);
+$article = db_fetch_row("
+    SELECT * FROM artikel WHERE slug = ?
+", [$slug]);
 
 if (!$article) {
     http_response_code(404);
-    echo "Story not found.";
+    die("Story not found.");
 }
 
-$tags_query = "SELECT * FROM tag";
-$stmt = $conn->query($tags_query);
-$all_tags = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$all_tags = db_fetch_all("SELECT * FROM tag");
+$all_categories = db_fetch_all("SELECT * FROM kategori");
 
-$kategori_query = "SELECT * FROM kategori";
-$stmt = $conn->query($kategori_query);
-$all_categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-$category_query = "
-    SELECT kategori.id
+$selected_category = db_fetch_col("
+    SELECT id_kategori
     FROM artikel
-    JOIN kategori
-        ON artikel.id_kategori = kategori.id
-    WHERE artikel.id = ?;
-";
-$stmt = $conn->prepare($category_query);
-$stmt->execute([$article["id"]]);
-$selected_category = $stmt->fetchColumn();
+    WHERE id = ?
+", [$article["id"]]);
 
-$tags_query = "
-    SELECT tag.id
+$selected_tags = db_fetch_col_arr("
+    SELECT tag_id
     FROM artikel_tag
-    JOIN tag
-        ON artikel_tag.tag_id = tag.id
-    WHERE artikel_tag.artikel_id = ?
-";
-
-$stmt = $conn->prepare($tags_query);
-$stmt->execute([$article["id"]]);
-$selected_tags = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    WHERE artikel_id = ?
+", [$article["id"]]);
 
 $old_slug = $slug;
 ?>
