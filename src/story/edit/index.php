@@ -63,17 +63,10 @@ $old_slug = $slug;
             <h5 class="mb-2 text-lg font-semibold">Select Category:</h5>
             <div class="flex flex-wrap gap-2">
                 <?php foreach ($all_categories as $cat): ?>
-                <?php if ($cat["id"] == $selected_category): ?>
-                <button type="button" data-cat-id="<?= $cat['id'] ?>"
-                    class="category text-primary font-semibold px-3 py-1 border border-primary text-white bg-primary">
-                    <?= $cat["name"] ?>
-                </button>
-                <?php else: ?>
-                <button type="button" data-cat-id="<?= $cat['id'] ?>"
-                    class="category text-primary font-semibold px-3 py-1 border border-primary">
-                    <?= $cat["name"] ?>
-                </button>
-                <?php endif; ?>
+                    <button type="button" data-cat-id="<?= $cat['id'] ?>"
+                        class="category text-primary font-semibold px-3 py-1 border border-primary">
+                        <?= $cat["name"] ?>
+                    </button>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -81,14 +74,11 @@ $old_slug = $slug;
         <div class="mt-8">
             <h5 class="mb-2 text-lg font-semibold">Select Tags:</h5>
             <div class="flex flex-wrap gap-2">
-                <?php
-                foreach ($all_tags as $tag):
-                $is_selected = in_array($tag["id"], $selected_tags);
-                 ?>
-                <button type="button" data-tag-id="<?= $tag['id'] ?>"
-                    class="tag text-primary font-semibold px-3 py-1 border border-primary <?= $is_selected ? 'text-white bg-primary' : '' ?>">
-                    # <?= $tag['name'] ?>
-                </button>
+                <?php foreach ($all_tags as $tag): ?>
+                    <button type="button" data-tag-id="<?= $tag['id'] ?>"
+                        class="tag text-primary font-semibold px-3 py-1 border border-primary">
+                        # <?= $tag['name'] ?>
+                    </button>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -109,98 +99,17 @@ $old_slug = $slug;
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-
 <script>
-const quill = new Quill('#editor', {
-    placeholder: "Enter your stories here",
-    theme: 'snow'
-});
+const categoryInput = document.querySelector("#category-input");
+categoryInput.value = <?= json_encode((string) $selected_category) ?>;
 
-const imgInput = document.querySelector("#img_url");
-const imgContainer = document.querySelector("#img-container");
+const tagsInput = document.querySelector("#tags-input");
+tagsInput.value = <?= json_encode(array_map('strval', $selected_tags)) ?>;
 
-let timeout;
-
-const addImg = (url) => {
-    if (!url) {
-        imgContainer.innerHTML = "";
-        return;
-    }
-
-    const img = new Image();
-
-    img.onload = () => {
-        img.className = "mt-3 shadow-lg";
-        imgContainer.innerHTML = "";
-        imgContainer.appendChild(img);
-    };
-
-    img.onerror = () => {
-        imgContainer.innerHTML = `
-                <p class="mt-3 text-primary font-semibold">
-                    Unable to load image.
-                </p>
-            `;
-    };
-
-    img.src = url;
-}
-
-window.addEventListener("load", () => {
-    addImg("<?= $article["img_cover"] ?>");
-})
-
-imgInput.addEventListener("input", () => {
-    clearTimeout(timeout);
-
-    addImg(imgInput.value.trim());
-
-    timeout = setTimeout(() => {}, 500);
-});
-
-const categories = document.querySelectorAll(".category");
-const tags = document.querySelectorAll(".tag");
-
-let selectedCategory = <?= json_encode((string) $selected_category) ?>;
-let selectedTags = <?= json_encode(array_map('strval', $selected_tags)) ?>;
-
-categories.forEach(category => {
-    category.addEventListener("click", () => {
-        categories.forEach(cat => {
-            cat.classList.remove("bg-primary", "text-white");
-        });
-
-        category.classList.add("bg-primary", "text-white");
-
-        selectedCategory = category.dataset.catId;
-    });
-});
-
-tags.forEach(tag => {
-    tag.addEventListener("click", () => {
-        const tagId = tag.dataset.tagId;
-
-        tag.classList.toggle("bg-primary");
-        tag.classList.toggle("text-white");
-
-        if (tag.classList.contains("bg-primary")) {
-            // Add tag if selected
-            selectedTags.push(tagId);
-        } else {
-            // Remove tag if unselected
-            selectedTags = selectedTags.filter(id => id !== tagId);
-        }
-    });
-});
-
-quill.root.innerHTML = `<?= $article['content'] ?>`;
-
-document.querySelector("form#edit-story").addEventListener("submit", () => {
-    document.querySelector("#content-input").value = quill.root.innerHTML;
-    document.querySelector("#category-input").value = selectedCategory;
-    document.querySelector("#tags-input").value = selectedTags.join(",");
-})
+const quillContent = <?= json_encode($article["content"]) ?>;
 </script>
+<script src="/cms-blog/assets/js/story-form.js"></script>
+
 <?php
 include_once "../../foot.php";
 ?>
