@@ -39,11 +39,11 @@ $old_slug = $slug;
 <link rel="stylesheet" href="../../quill.css">
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
-<section class="px-86 py-32">
+<section id="form">
     <form action="../edit.php" method="POST" id="edit-story">
         <input type="text" name="title" placeholder="Untitled Article" value="<?= $article['title'] ?>"
             class="w-full text-5xl font-bold placeholder:text-black/30 overflow-x-visible!">
-        <div class="mt-12 mb-20">
+        <div class="mt-12 lg:mb-20 mb-14">
             <h5 class="text-lg font-semibold">Thumbnail</h5>
             <div class="-mt-4">
                 <input type="text" id="img_url" name="img_url" placeholder="Paste image URL..."
@@ -63,10 +63,10 @@ $old_slug = $slug;
             <h5 class="mb-2 text-lg font-semibold">Select Category:</h5>
             <div class="flex flex-wrap gap-2">
                 <?php foreach ($all_categories as $cat): ?>
-                    <button type="button" data-cat-id="<?= $cat['id'] ?>"
-                        class="category text-primary font-semibold px-3 py-1 border border-primary">
-                        <?= $cat["name"] ?>
-                    </button>
+                <button type="button" data-cat-id="<?= $cat['id'] ?>"
+                    class="category pill">
+                    <?= $cat["name"] ?>
+                </button>
                 <?php endforeach; ?>
             </div>
         </div>
@@ -75,16 +75,16 @@ $old_slug = $slug;
             <h5 class="mb-2 text-lg font-semibold">Select Tags:</h5>
             <div class="flex flex-wrap gap-2">
                 <?php foreach ($all_tags as $tag): ?>
-                    <button type="button" data-tag-id="<?= $tag['id'] ?>"
-                        class="tag text-primary font-semibold px-3 py-1 border border-primary">
-                        # <?= $tag['name'] ?>
-                    </button>
+                <button type="button" data-tag-id="<?= $tag['id'] ?>"
+                    class="tag pill">
+                    # <?= $tag['name'] ?>
+                </button>
                 <?php endforeach; ?>
             </div>
         </div>
 
-        <div class="flex justify-end w-full mt-20">
-            <button type="submit" class=" bg-primary text-white tracking-widest px-6 py-3 font-bold">
+        <div class="flex justify-end w-full mt-14 lg:mt-20">
+            <button type="submit" class="btn-primary">
                 Submit
             </button>
         </div>

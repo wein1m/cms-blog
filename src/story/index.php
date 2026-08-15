@@ -29,42 +29,43 @@ $tags = db_fetch_col_arr("
 ", [$article["id"]]);
 ?>
 
-<section>
+<section id="story">
     <div id="confirmation-modal" class="hidden fixed inset-0 bg-black/50 z-999 items-center justify-center">
-        <div id="confirmation-box" class="bg-white rounded-lg p-8">
+        <div id="confirmation-box" class="bg-white rounded-lg p-8 m-8">
             <h1 id="modal-title" class="text-3xl font-semibold">
                 Confirmation
             </h1>
 
             <div class="pr-10 max-w-[24rem] my-4">
-                <p id="modal-text-1" class="text-gray-800/80 text-sm leading-snug mb-2"></p>
-                <p id="modal-text-2" class="text-gray-800/80 text-sm leading-snug"></p>
+                <p id="modal-text-1" class="text-gray-800/80 text-xs md:text-sm leading-snug mb-2"></p>
+                <p id="modal-text-2" class="text-gray-800/80 text-xs md:text-sm leading-snug"></p>
             </div>
 
-            <div class="flex flex-row gap-2 mt-4">
+            <div class="flex flex-wrap md:flex-nowrap flex-row gap-2 mt-4 w-full">
                 <button type="button" id="modal-cancel"
-                    class="rounded-sm w-1/2 flex justify-center bg-[#e6e6f4] text-text-primary font-semibold px-4 py-2 hover:bg-[#cfcfd7] transition-colors duration-200 cursor-pointer">
+                    class="rounded-sm w-full md:w-1/2 flex justify-center bg-[#e6e6f4] text-text-primary font-semibold px-4 py-2 hover:bg-[#cfcfd7] transition-colors duration-200 cursor-pointer">
                     Cancel
                 </button>
 
                 <a id="modal-confirm"
-                    class="rounded-sm w-1/2 flex justify-center bg-primary text-white font-semibold px-4 py-2 hover:bg-primary/90 transition-colors duration-200 cursor-pointer">
+                    class="rounded-sm w-full md:w-1/2 flex justify-center bg-primary text-white font-semibold px-4 py-2 hover:bg-primary/90 transition-colors duration-200 cursor-pointer">
                     Confirm
                 </a>
             </div>
         </div>
     </div>
 
-    <div class="flex flex-col justify-center items-center px-86 mt-24 text-center ">
-        <h1 class="text-6xl mb-4 font-semibold"><?= $article["title"] ?></h1>
-        <span class="mt-4 opacity-80 font-semibold tracking-wider">
-            <?= FormatDate($article["created_at"]) ?> | Wein Salema Arbalest</span>
+    <div class="flex flex-col justify-center lg:items-center lg:text-center">
+        <h1 class="title leading-snug"><?= $article["title"] ?></h1>
+        <span class="lg:mt-4 text-left opacity-80 font-semibold tracking-wider">
+            <?= FormatDate($article["created_at"]) ?> | Wein Salema Arbalest
+        </span>
 
         <?php if ($isAdmin): ?>
         <div class="flex gap-4 mt-6">
             <!-- <a href="/cms-blog/src/story/edit/<?= $slug ?>" -->
             <button type="button" id="edit-story"
-                class="flex items-center gap-2 border border-text-primary text-text-primary font-semibold px-4 py-2 hover:bg-text-primary hover:text-bg transition-colors duration-200">
+                class="flex items-center gap-2 border border-text-primary text-text-primary font-semibold px-4 py-2 hover:bg-text-primary hover:text-bg hover:cursor-pointer transition-all">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M12 20h9" />
@@ -73,7 +74,7 @@ $tags = db_fetch_col_arr("
                 Edit Story
                 </a>
                 <button type="button" id="delete-story"
-                    class="flex items-center gap-2 border border-primary text-primary font-semibold px-4 py-2 hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer">
+                    class="flex items-center gap-2 border border-primary text-primary font-semibold px-4 py-2 hover:bg-primary hover:text-white hover:cursor-pointer transition-all">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M3 6h18" />
@@ -86,13 +87,13 @@ $tags = db_fetch_col_arr("
         <?php endif; ?>
     </div>
 
-    <div class="flex flex-col justify-center mt-16 mx-86">
-        <img src="<?= $article['img_cover'] ?>" class="mb-4 rounded-3xl" />
-        <div class="font-gsans text-lg tracking-wider mx-16 my-4">
+    <div class="flex flex-col justify-center mt-16">
+        <img src="<?= $article['img_cover'] ?>" class="mb-4 rounded-lg lg:rounded-3xl" />
+        <div class="font-gsans tracking-wider lg:mx-16 my-4 lg:text-lg">
             <?= $article["content"] ?>
         </div>
 
-        <div class="mx-16 my-2 flex gap-2">
+        <div class="lg:mx-16 my-2 flex gap-2 flex-wrap">
             <?php foreach($tags as $tag): ?>
             <a href="#" class="text-primary font-semibold px-3 py-1 border border-primary">
                 # <?= $tag ?>
@@ -100,22 +101,9 @@ $tags = db_fetch_col_arr("
             <?php endforeach; ?>
         </div>
 
-        <div>
-            <a href="/cms-blog/src/index.php"
-                class="mx-16 my-4 flex items-center gap-2 text-text-primary hover:text-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 72 72">
-                    <path fill="currentColor"
-                        d="M22.788 51.534L5 35.036l17.788-16.498l3.789 4.076l-10.396 9.641H67v5.562H16.181l10.396 9.642z" />
-                    <path fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-miterlimit="10" stroke-width="2"
-                        d="M22.788 51.534L5 35.036l17.788-16.498l3.789 4.076l-10.396 9.641H67v5.562H16.181l10.396 9.642z" />
-                </svg>
-                Back to Home</a>
-        </div>
-
         <div class="mt-32">
             <h5 class="text-5xl font-semibold mb-6">Related</h5>
-            <div class="grid grid-cols-3 gap-14">
+            <div class="cards-grid">
                 <?php
                 $rows = db_fetch_all("
                     SELECT * FROM artikel
@@ -125,8 +113,10 @@ $tags = db_fetch_col_arr("
                 ", [$slug]);
                 foreach ($rows as $row):
                 ?>
-                <a href="/cms-blog/src/story/<?= $row['slug'] ?>" class="flex flex-col tracking-wide">
-                    <img src="<?= $row['img_cover'] ?>" class="shadow-lg mb-4" />
+                <a href="/cms-blog/src/story/<?= $row['slug'] ?>">
+                    <div class="img-container">
+                        <img src="<?= $row['img_cover'] ?>" />
+                    </div>
                     <h5 class="text-2xl font-semibold leading-tight mb-2 line-clamp-2"><?= $row['title'] ?></h5>
                     <p class="line-clamp-2"><?= strip_tags($row['content']); ?></p>
                     <p class="mt-4 text-gray-800 font-semibold">
@@ -134,7 +124,6 @@ $tags = db_fetch_col_arr("
                     </p>
                 </a>
                 <?php endforeach; ?>
-
             </div>
 
         </div>
@@ -142,8 +131,8 @@ $tags = db_fetch_col_arr("
 </section>
 
 <script>
-    const editURL = "/cms-blog/src/story/edit/<?= $slug ?>";
-    const deleteURL = "/cms-blog/src/story/delete.php?id=<?= $article['id'] ?>";
+const editURL = "/cms-blog/src/story/edit/<?= $slug ?>";
+const deleteURL = "/cms-blog/src/story/delete.php?id=<?= $article['id'] ?>";
 </script>
 <script src="/cms-blog/assets/js/modal.js"></script>
 

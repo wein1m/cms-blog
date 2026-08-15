@@ -9,11 +9,11 @@ $categories = db_fetch_all("SELECT * FROM kategori");
 <link rel="stylesheet" href="../quill.css">
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
-<section class="px-86 py-32">
+<section id="form">
     <form action="create.php" method="POST" id="new-story">
         <input type="text" name="title" placeholder="Untitled Article"
             class="w-full text-5xl font-bold placeholder:text-black/30 overflow-x-visible!">
-        <div class="mt-12 mb-20">
+        <div class="mt-12 lg:mb-20 mb-14">
             <h5 class="text-lg font-semibold">Thumbnail</h5>
             <div class="-mt-4">
                 <input type="text" id="img_url" name="img_url" placeholder="Paste image URL..."
@@ -33,7 +33,7 @@ $categories = db_fetch_all("SELECT * FROM kategori");
             <div class="flex flex-wrap gap-2">
                 <?php foreach ($categories as $cat): ?>
                 <button type="button" data-cat-id="<?= $cat['id'] ?>"
-                    class="category text-primary font-semibold px-3 py-1 border border-primary">
+                    class="category pill">
                     <?= $cat["name"] ?>
                 </button>
                 <?php endforeach; ?>
@@ -45,15 +45,15 @@ $categories = db_fetch_all("SELECT * FROM kategori");
             <div class="flex flex-wrap gap-2">
                 <?php foreach ($tags as $tag): ?>
                 <button type="button" data-tag-id="<?= $tag['id'] ?>"
-                    class="tag text-primary font-semibold px-3 py-1 border border-primary">
+                    class="tag pill">
                     # <?= $tag["name"] ?>
                 </button>
                 <?php endforeach; ?>
             </div>
         </div>
 
-        <div class="flex justify-end w-full mt-20">
-            <button type="submit" class=" bg-primary text-white tracking-widest px-6 py-3 font-bold">
+        <div class="flex justify-end w-full mt-14 lg:mt-20">
+            <button type="submit" class="btn-primary">
                 Submit
             </button>
         </div>

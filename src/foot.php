@@ -1,7 +1,7 @@
   <footer class="mt-32 py-24 pb-0 px-16 bg-[#1f0c1f]">
       <div class="text-white text-center">
-          <h3 class="font-bungee text-5xl font-semibold tracking-wide mb-4">FOLLOW US</h3>
-          <p class="font-gsans text-lg font-medium opacity-80">Follow our social media to catch up with the latest
+          <h3 class="font-bungee text-4xl lg:text-5xl font-semibold tracking-wide mb-4">FOLLOW US</h3>
+          <p class="font-gsans lg:text-lg font-medium opacity-80">Follow our social media to catch up with the latest
               content.
           </p>
       </div>
@@ -36,7 +36,7 @@
           </li>
       </ul>
 
-      <div class="w-full border-t border-bg text-white text-center tracking-widest py-6 px-24 mt-14">
+      <div class="w-full border-t border-bg text-white text-center tracking-widest py-6 px-12 lg:px-24 mt-14">
           © 2026 Shiori News Inc.
       </div>
   </footer>

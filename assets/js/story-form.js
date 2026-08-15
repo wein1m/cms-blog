@@ -63,12 +63,12 @@ window.addEventListener("DOMContentLoaded", () => {
     const catId = cat.dataset.catId;
 
     if (selectedCategory && catId == selectedCategory) {
-      cat.classList.add("bg-primary", "text-white");
+      cat.classList.add("bg-primary!", "text-white!");
     }
 
     cat.addEventListener("click", () => {
-      categories.forEach((c) => c.classList.remove("bg-primary", "text-white"));
-      cat.classList.add("bg-primary", "text-white");
+      categories.forEach((c) => c.classList.remove("bg-primary!", "text-white!"));
+      cat.classList.add("bg-primary!", "text-white!");
       selectedCategory = catId;
       if (categoryInput) categoryInput.value = selectedCategory;
     });
@@ -83,14 +83,14 @@ window.addEventListener("DOMContentLoaded", () => {
     const tagId = tag.dataset.tagId;
 
     if (selectedTags.includes(tagId)) {
-      tag.classList.add("bg-primary", "text-white");
+      tag.classList.add("bg-primary!", "text-white!");
     }
 
     tag.addEventListener("click", () => {
-      tag.classList.toggle("bg-primary");
-      tag.classList.toggle("text-white");
+      tag.classList.toggle("bg-primary!");
+      tag.classList.toggle("text-white!");
 
-      if (tag.classList.contains("bg-primary")) {
+      if (tag.classList.contains("bg-primary!")) {
         // Add tag if selected and isn't on the selectedTags yet
         if (!selectedTags.includes(tagId)) selectedTags.push(tagId);
       } else {

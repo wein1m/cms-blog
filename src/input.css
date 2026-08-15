@@ -1,55 +1,84 @@
 @import "tailwindcss";
 
 @theme {
-    --color-bg: #f5f2e4;
-    --color-text-primary: #010101;
-    --color-primary: #e04016;
-    --color-nav: #ebe6d5;
+  --color-bg: #f5f2e4;
+  --color-text-primary: #010101;
+  --color-primary: #e04016;
+  --color-nav: #ebe6d5;
 
-    --font-grotesk: "Hanken Grotesk", sans-serif;
-    --font-gsans: "Google Sans", sans-serif;
-    --font-bungee: "Bungee", sans-serif;
+  --font-grotesk: "Hanken Grotesk", sans-serif;
+  --font-gsans: "Google Sans", sans-serif;
+  --font-bungee: "Bungee", sans-serif;
 }
 
 @font-face {
-    font-family: 'Google Sans';
-    src: url(../assets/fonts/Google_Sans/GoogleSans.ttf) format('truetype');
+  font-family: "Google Sans";
+  src: url(../assets/fonts/Google_Sans/GoogleSans.ttf) format("truetype");
 }
 
 @font-face {
-    font-family: 'Hanken Grotesk';
-    src: url(../assets/fonts/Hanken_Grotesk/HankenGrotesk.ttf) format('truetype');
+  font-family: "Hanken Grotesk";
+  src: url(../assets/fonts/Hanken_Grotesk/HankenGrotesk.ttf) format("truetype");
 }
 
 @font-face {
-    font-family: 'Bungee';
-    src: url(../assets/fonts/Bungee/Bungee-Regular.ttf) format('truetype');
+  font-family: "Bungee";
+  src: url(../assets/fonts/Bungee/Bungee-Regular.ttf) format("truetype");
+}
+
+::selection {
+  background-color: #bdb29660;
 }
 
 *:focus {
-    outline: none;
+  outline: none;
 }
 
 body {
-    @apply bg-bg font-grotesk overflow-x-hidden;
+  @apply bg-bg font-grotesk overflow-x-hidden;
 }
 
 .title {
-    @apply py-24 text-center font-gsans px-48;
-
-    h1 {
-        @apply text-6xl mb-4 font-bold leading-snug;
-    }
-    h3 {
-        @apply text-2xl font-semibold;
-    }
+  @apply text-3xl md:text-5xl lg:text-6xl mb-4 font-semibold;
 }
 
-.page-number {
-    @apply text-text-primary text-3xl font-grotesk font-medium ;
+#form,
+#story {
+  @apply px-6 pt-14;
+  @apply md:px-24! md:pt-24!;
+  @apply lg:px-34! lg:pt-24!;
+  @apply xl:px-86! xl:pt-32!;
+}
 
-    a {
-        @apply p-4;
-        @apply hover:text-primary hover:cursor-pointer hover:font-semibold;
+.pill {
+  @apply text-primary font-semibold px-3 py-1 border border-primary transition-all;
+  @apply hover:cursor-pointer hover:bg-primary/5;
+}
+
+.btn-primary {
+  @apply bg-primary text-white tracking-widest px-6 py-3 font-bold flex items-center gap-2;
+  @apply hover:cursor-pointer hover:bg-primary/90;
+  @apply focus:bg-primary/80;
+}
+
+.cards-grid {
+  @apply grid grid-cols-1 lg:grid-cols-3 gap-14;
+
+  a {
+    @apply flex flex-col tracking-wide;
+
+    .img-container {
+      @apply aspect-video mb-4 overflow-hidden shadow-lg;
+
+      img {
+        @apply w-full h-full object-cover transition-all duration-300 ;
+      }
     }
+
+    &:hover {
+      .img-container img {
+        @apply scale-110;
+      }
+    }
+  }
 }
