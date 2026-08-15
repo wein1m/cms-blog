@@ -56,7 +56,7 @@ $tags = db_fetch_col_arr("
     </div>
 
     <div class="flex flex-col justify-center lg:items-center lg:text-center">
-        <h1 class="title leading-snug"><?= $article["title"] ?></h1>
+        <h1 class="title"><?= $article["title"] ?></h1>
         <span class="lg:mt-4 text-left opacity-80 font-semibold tracking-wider">
             <?= FormatDate($article["created_at"]) ?> | Wein Salema Arbalest
         </span>
@@ -72,17 +72,17 @@ $tags = db_fetch_col_arr("
                     <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" />
                 </svg>
                 Edit Story
-                </a>
-                <button type="button" id="delete-story"
-                    class="flex items-center gap-2 border border-primary text-primary font-semibold px-4 py-2 hover:bg-primary hover:text-white hover:cursor-pointer transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 6h18" />
-                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                    </svg>
-                    Delete Story
-                </button>
+            </button>
+            <button type="button" id="delete-story"
+                class="flex items-center gap-2 border border-primary text-primary font-semibold px-4 py-2 hover:bg-primary hover:text-white hover:cursor-pointer transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 6h18" />
+                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                </svg>
+                Delete Story
+            </button>
         </div>
         <?php endif; ?>
     </div>

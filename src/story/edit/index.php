@@ -36,7 +36,7 @@ $selected_tags = db_fetch_col_arr("
 $old_slug = $slug;
 ?>
 
-<link rel="stylesheet" href="../../quill.css">
+<link rel="stylesheet" href="/cms-blog/assets/style/quill.css">
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
 <section id="form">

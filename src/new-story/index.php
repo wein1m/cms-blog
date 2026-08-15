@@ -6,7 +6,7 @@ $tags = db_fetch_all("SELECT * FROM tag");
 $categories = db_fetch_all("SELECT * FROM kategori");
 ?>
 
-<link rel="stylesheet" href="../quill.css">
+<link rel="stylesheet" href="/cms-blog/assets/style/quill.css">
 <link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
 
 <section id="form">

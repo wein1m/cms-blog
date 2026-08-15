@@ -10,7 +10,7 @@ $isAdmin = true; // yes. no auth. don't ask :3
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="icon" href="/cms-blog/assets/logo/favicon.ico">
-    <link rel="stylesheet" href="/cms-blog/src/output.css" />
+    <link rel="stylesheet" href="/cms-blog/assets/style/output.css" />
 </head>
 
 <body>

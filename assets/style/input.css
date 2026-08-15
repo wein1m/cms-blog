@@ -13,17 +13,17 @@
 
 @font-face {
   font-family: "Google Sans";
-  src: url(../assets/fonts/Google_Sans/GoogleSans.ttf) format("truetype");
+  src: url(../fonts/Google_Sans/GoogleSans.ttf) format("truetype");
 }
 
 @font-face {
   font-family: "Hanken Grotesk";
-  src: url(../assets/fonts/Hanken_Grotesk/HankenGrotesk.ttf) format("truetype");
+  src: url(../fonts/Hanken_Grotesk/HankenGrotesk.ttf) format("truetype");
 }
 
 @font-face {
   font-family: "Bungee";
-  src: url(../assets/fonts/Bungee/Bungee-Regular.ttf) format("truetype");
+  src: url(../fonts/Bungee/Bungee-Regular.ttf) format("truetype");
 }
 
 ::selection {
