@@ -2,9 +2,7 @@
 
 <br />
 
-<p align="center">
-  <video src="preview.mp4"></video>
-</p>
+https://github.com/user-attachments/assets/85b0c1cf-0b85-45ed-998c-34473e047f85
 
 <br />
 
