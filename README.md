@@ -6,6 +6,8 @@ https://github.com/user-attachments/assets/85b0c1cf-0b85-45ed-998c-34473e047f85
 
 <br />
 
+A simple CMS website for a school’s CRUD assignment
+
 ```
 cms-blog/
 ├── assets/
